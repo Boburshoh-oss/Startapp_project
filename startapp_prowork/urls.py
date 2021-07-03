@@ -15,10 +15,11 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path,include
-from django.templatetags.static import static
-from django.conf import settings
+# from django.templatetags.static import static
+from django.conf.urls.static import static
+from .settings import *
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('',include('main.urls')),
 ]
-urlpatterns+=static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+urlpatterns+=static(MEDIA_URL, document_root=MEDIA_ROOT) + static(STATIC_URL,document_root = STATIC_ROOT)
