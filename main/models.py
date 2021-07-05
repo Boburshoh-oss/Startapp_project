@@ -5,7 +5,7 @@ from django.urls import reverse
 # Create your models here.
 
 
-class User(AbstractUser):
+class Custom_User(AbstractUser):
 
     STARTAPPER = 'startapper'
     DEVELOPER = 'developer'
@@ -17,15 +17,15 @@ class User(AbstractUser):
         (PRACTITIONER , 'practitioner'),
     ]
 
-    fullname  = models.CharField('full_name', max_length='100' , null=True )
+    fullname  = models.CharField('full_name', max_length=100 , null=True )
     email = models.EmailField('email' , unique=True)   
     phone = models.CharField('phone' , max_length=20 , unique=True)
-    user_type = models.CharField('User_Type' , choices=USER_TYPE)
+    user_type = models.CharField('User_Type' ,max_length=20, choices=USER_TYPE , default=DEVELOPER)
     date_joined = models.DateField('Date_Joined' , auto_now_add=True)
 
 
 class Startapper(models.Model):
-    user = models.OneToOneField(User , on_delete=models.CASCADE)
+    user = models.OneToOneField(Custom_User , on_delete=models.CASCADE , null=True)
     title=models.CharField(max_length=100)
     file=models.FileField(upload_to='Startapp_project/%Y/%m/%d/')
     description=models.TextField()
@@ -53,9 +53,9 @@ class Programmer(models.Model):
         (MOBILE , 'mobile'),
     ]
 
-    user = models.OneToOneField(User , on_delete=models.CASCADE)
+    user = models.OneToOneField(Custom_User , on_delete=models.CASCADE , null= True)
     information=models.TextField()
-    direction = models.CharField(choices=DIRECTION , default=BACKEND)
+    direction = models.CharField(max_length=20, choices=DIRECTION , default=BACKEND)
     resume = models.FileField(upload_to='stuff_resume/%Y/%m/%d/')
 
     class Meta:
