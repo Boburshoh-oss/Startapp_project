@@ -1,0 +1,17 @@
+__pycache__/
+*.py[cod]
+# Translations
+*.mo
+*.pot
+assets/
+.venv
+.env
+.ven
+tech_env
+.idea
+tech_venv
+theme/
+media/
+.well-known/
+settings.json
+venv
