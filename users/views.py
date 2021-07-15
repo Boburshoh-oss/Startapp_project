@@ -10,21 +10,6 @@ def index(request):
 def startapper(request):
     return render(request , 'users/startapper.html' , {})
 
-def detil(request):
-    form = Registers()
-    startappr = Startapper.objects.get(user=request.user)
-    if request.method == "POST":
-        form = Registers(request.POST, request.FILES)
-        if form.is_valid():
-            bio = form.cleaned_data['bio']
-            country = form.cleaned_data['country']
-            image = request.FILES['image']
-            startappr.bio = bio
-            startappr.country = country
-            startappr.image = image
-            startappr.save()
-            redirect("/")
-    return render(request, 'uses/detail.html', {'form': form})
 
 @login_required(login_url='login')
 def developer(request):
