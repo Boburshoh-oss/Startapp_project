@@ -1,0 +1,15 @@
+{% extends 'users/base.html' %}
+
+{% block title %}
+Registration
+{% endblock %}
+
+{% block body %}
+<form action="" method="post">
+    {% csrf_token %}
+    {{form.as_p}}
+    <input type="submit" value="login" class="btn btn-success">
+    <p>If you have no account please register <a href="{% url 'register:register' %}">here</a></p>
+    <p>Forgot <a href="{% url 'password_reset' %}">password</a></p>
+</form>
+{% endblock %}
