@@ -14,13 +14,29 @@
                   </div>
                   <ul class="nav navbar-nav">
                     <li class="active"><a href="{% url 'users:index' %}">Home</a></li>
+                    
+                    {% if request.user.user_type == 'Startapper' %}
                     <li><a href="{% url 'users:Startapper' %}">Startapper</a></li>
+                    
+                    {% elif request.user.user_type == 'Developer' %}
                     <li><a href="{% url 'users:Developer' %}">Developer</a></li>
+                    
+                    {% elif request.user.user_type == 'Practitioner' %}
                     <li><a href="{% url 'users:Practitioner' %}">Practitioner</a></li>
+                    
+                    {% elif request.user.is_staff %}
+
+                    <li><a href="{% url 'users:Startapper' %}">Startapper</a></li>
+                    <li><a href="{% url 'users:Developer' %}">Developer</a></li>     
+                    <li><a href="{% url 'users:Practitioner' %}">Practitioner</a></li>
+
+                    {% endif %}
+                    <li><a href="{% url 'users:Practitioner' %}">Success projects</a></li>
+                    <li><a href="{% url 'users:Practitioner' %}">About us</a></li>
                   </ul>
                   <ul class="nav navbar-nav navbar-right">
                     {% if request.user.username %}
-                    <li><a href="#"><span class="glyphicon glyphicon-user"></span> {{request.user.username}}</a></li>
+                    <li><a href="{% url 'users:profile' %}"><span class="glyphicon glyphicon-user"></span> {{request.user.username}}</a></li>
                     <li><a href="{% url 'logout' %}"><span class="glyphicon glyphicon-log-in"></span> logout</a></li>
                     {% else %}
                     <li><a href="{% url 'register:register' %}"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>

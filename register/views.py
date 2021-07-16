@@ -37,7 +37,11 @@ def log_in(request):
             user = authenticate(request=request , username = username , password= password)
             if user:
                 login(request,user)
-                return redirect(f'users:{user.user_type}')
+                if user.user_type:
+                    return redirect(f'users:{user.user_type}')
+                else:
+                    return redirect('users:index')
     else:
         form = Login()
     return render(request , 'register/login.html' , {'form':form})
+

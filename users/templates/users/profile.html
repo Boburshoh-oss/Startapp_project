@@ -1,0 +1,53 @@
+{% extends 'users/base.html' %}
+
+{% block title %}
+{{user.username}}
+{% endblock %}
+
+{% block body %}
+
+<div>
+    {% if user.image %}
+    <img src="{{ user.image.url }}" alt="Rasm yuklamabsizku" style="width: 100px;">
+    {% else %}
+    <p>Paht to image</p>
+    {% endif %}
+    <h2>Full Name: {{ user.user.full_name }}</h2>
+    <h3>username: {{ user.user.username }}</h3>
+    <h3>user type: {{ user.user.user_type }}</h3>
+    <h3>Email: {{ user.user.email }}</h3>
+    <h3>Phon:e {{ user.user.phone }}</h3>
+    {% if user.country is not None %}
+        <h3>Country {{ user.country }}</h3>
+    {% else %}
+        <h3>Country N/A</h3>
+    {% endif %}
+    {% if user.bio %}
+    <h3>{{ user.bio }}</h3>
+    {% else %}
+    <h3> no bio ...</h3>
+    {% endif %}
+    
+    {% if user.country is None %}
+    <h4>Complate your <a href="{% url 'users:update' user.pk %}">profile</a></h4>
+    {% else %}
+    <h4>Update your <a href="{% url 'users:update' user.pk %}">profile</a></h4>
+    {% endif %}
+</div>
+<div>
+    <ul>
+        {% if ideas %}
+            {% for idea in ideas %}
+                <li>{{ idea.title }}</li>
+                <li>{{ idea.description }}</li>
+                <li>{{ idea.file }}</li>
+                <li>{{ idea.created_at }}</li>
+            {% endfor %}
+        {% else %}
+            <h3>Sizda hozircha arizalar yo'q</h3>
+        {% endif %}
+    </ul>
+
+
+
+{% endblock %}

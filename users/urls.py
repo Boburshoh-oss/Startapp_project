@@ -7,5 +7,7 @@ urlpatterns = [
     path('', index , name='index'),
     path('startapper/' , startapper , name='Startapper'),
     path('developer/' , developer , name='Developer'),
-    path('practitioner/', practitioner , name='Practitioner')
+    path('practitioner/', practitioner , name='Practitioner'),
+    path('profile/' , profile_page , name='profile'),
+    path('update/<int:pk>' , StaffUpdateWiew.as_view() , name='update' )
 ]
