@@ -7,6 +7,22 @@ Developer
 {% block body %}
 
 <h1>{{request.user.username}}</h1>
-<p>Here is the developers page</p>
+<p>Here is the developers page and Our Developers</p>
+
+    {% if developers %}
+        {% for dev in developers %}
+            <p>{{ dev.user.username }}</p>
+        {% endfor %}
+    {% else %}
+        <p>We hava no developers so far</p>
+    {% endif %}
+
+    <h4>Send your application here</h4>
+    <form action="" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{applicationform.as_p}}
+        <input type="submit" , value="send">
+
+    </form>
 
 {% endblock %}

@@ -36,7 +36,23 @@
 </div>
 <div>
     <ul>
+        {% if application %}
+            <h3>Your job application</h3>
+            <li>Title: {{ application.title }}</li>
+            <li>Description: {{ application.description }}</li>
+            <li>Work_type: {{ application.work_type }}</li> 
+            <li>Resume: {{ application.resume }}</li> 
+            <li>Sent date: {{ application.created_at }}</li>
+            <p>Update your application <a href="{% url 'users:appupdate' user.pk %}">here</a></p>
+        {% else %}
+            <h3>You haven't submitted job application</h3>
+        {% endif %}
+    </ul>
+</div>
+<div>
+    <ul>
         {% if ideas %}
+            <h3>Your ideas</h3>
             {% for idea in ideas %}
                 <li>{{ idea.title }}</li>
                 <li>{{ idea.description }}</li>
@@ -44,9 +60,16 @@
                 <li>{{ idea.created_at }}</li>
             {% endfor %}
         {% else %}
-            <h3>Sizda hozircha arizalar yo'q</h3>
+            <h3>You haven't submitted any ideas yet</h3>
+            <h3>Create your ideas Here</h3>
         {% endif %}
     </ul>
+    <form action="" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ ideaform.as_p }}
+    <input type="submit" value="create">
+    </form>
+</div>
 
 
 
