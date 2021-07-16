@@ -8,4 +8,5 @@ urlpatterns = [
     path('startapper/' , startapper , name='Startapper'),
     path('developer/' , developer , name='Developer'),
     path('practitioner/', practitioner , name='Practitioner')
+    path('detail/', detail , name='detail')
 ]
