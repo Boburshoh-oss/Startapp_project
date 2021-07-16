@@ -1,2 +1,10 @@
 from django.contrib.auth.forms import UserCreationForm
-from .models import CustomUser
+from django.forms import ModelForm
+
+from .models import CustomUser, Startapper
+
+
+class Registers(ModelForm):
+    class Meta:
+        model = Startapper
+        fields = ['bio', 'country', 'image']
