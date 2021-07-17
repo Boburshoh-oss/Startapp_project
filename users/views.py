@@ -2,8 +2,8 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 # from .forms import Register
 # Create your views here.
-from users.forms import Registers
-from users.models import Startapper
+from users.forms import Registers , IdeaStartapperForm
+from users.models import Startapper , IdeaStartapper
 
 
 def index(request):
