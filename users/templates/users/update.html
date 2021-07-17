@@ -1,0 +1,15 @@
+{% extends 'users/base.html' %}
+
+{% block title %}
+Update page
+{% endblock %}
+
+{% block body %}
+
+<form action="" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="update">
+</form>
+
+{% endblock %}
