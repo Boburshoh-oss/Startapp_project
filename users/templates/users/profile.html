@@ -8,33 +8,41 @@
 
 <div>
     {% if user.image %}
-    <img src="{{ user.image.url }}" alt="Rasm yuklamabsizku" style="width: 100px;">
+        <img src="{{ user.image.url }}" alt="Rasm yuklamabsizku" style="width: 100px;">
     {% else %}
-    <p>Paht to image</p>
+     <p>Paht to image</p>
     {% endif %}
     <h2>Full Name: {{ user.user.full_name }}</h2>
     <h3>username: {{ user.user.username }}</h3>
     <h3>user type: {{ user.user.user_type }}</h3>
     <h3>Email: {{ user.user.email }}</h3>
-    <h3>Phon:e {{ user.user.phone }}</h3>
+    <h3>Phone: {{ user.user.phone }}</h3>
     {% if user.country is not None %}
         <h3>Country {{ user.country }}</h3>
     {% else %}
         <h3>Country N/A</h3>
     {% endif %}
     {% if user.bio %}
-    <h3>{{ user.bio }}</h3>
+        <h3>Bio: {{ user.bio }}</h3>
     {% else %}
-    <h3> no bio ...</h3>
+        <h3> no bio ...</h3>
     {% endif %}
-    
-    {% if user.country is None %}
-    <h4>Complate your <a href="{% url 'users:update' user.pk %}">profile</a></h4>
+    {% if user.user.user_type != 'Startapper' %}
+        {% if user.country is None %}
+            <h4>Complate your <a href="{% url 'users:staffupdate' user.pk %}">profile</a></h4>
+        {% else %}
+            <h4>Update your <a href="{% url 'users:staffupdate' user.pk %}">profile</a></h4>
+        {% endif %}
     {% else %}
-    <h4>Update your <a href="{% url 'users:update' user.pk %}">profile</a></h4>
+        {% if user.country is None %}
+            <h4>Complate your <a href="{% url 'users:startapperupdate' user.pk %}">profile</a></h4>
+        {% else %}
+            <h4>Update your <a href="{% url 'users:startapperupdate' user.pk %}">profile</a></h4>
+        {% endif %}
     {% endif %}
 </div>
 <div>
+    {% if user.user.user_type != 'Startapper' %}
     <ul>
         {% if application %}
             <h3>Your job application</h3>
@@ -48,6 +56,7 @@
             <h3>You haven't submitted job application</h3>
         {% endif %}
     </ul>
+    {% endif %}
 </div>
 <div>
     <ul>
@@ -64,11 +73,15 @@
             <h3>Create your ideas Here</h3>
         {% endif %}
     </ul>
-    <form action="" method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ ideaform.as_p }}
-    <input type="submit" value="create">
-    </form>
+    {% if user.user.user_type != 'Startapper' %}
+        <form action="" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+                {{ ideaform.as_p }}
+            <input type="submit" value="create">
+        </form>
+    {% else %}
+        <p>Link to create <a href="{% url 'users:Startapper' %}">your idea</a></p>
+    {% endif %}
 </div>
 
 

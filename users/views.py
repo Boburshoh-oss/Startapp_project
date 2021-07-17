@@ -61,6 +61,7 @@ def profile_page(request):
     if request.user.user_type == "Startapper":
         user = Startapper.objects.get(user = request.user)
         ideas = IdeaStartapper.objects.filter(user = user)
+        application = None
     else:
         user = Staff.objects.get(user = request.user)
         ideas = AllUsersIdea.objects.filter(user = request.user)
@@ -93,6 +94,14 @@ def profile_page(request):
     
 class StaffUpdateWiew(UpdateView):
     model = Staff
+    fields = ['bio' , 'country' , 'image']
+    template_name = 'users/update.html'
+
+    def get_success_url(self):
+        return '/profile'
+
+class StartapperUpdateWiew(UpdateView):
+    model = Startapper
     fields = ['bio' , 'country' , 'image']
     template_name = 'users/update.html'
 
