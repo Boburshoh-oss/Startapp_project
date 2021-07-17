@@ -1,0 +1,17 @@
+{% extends 'users/base.html' %}
+
+{% block title %}
+IdeaStartapper
+{% endblock %}
+
+{% block body %}
+
+<h1>{{request.user.username}}</h1>
+
+<form action="" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{form.as_p}}
+    <input type="submit" value="create idea">
+</form>
+
+{% endblock %}
