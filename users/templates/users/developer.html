@@ -10,9 +10,11 @@ Developer
 <p>Here is the developers page and Our Developers</p>
 
     {% if developers %}
+    <ul>
         {% for dev in developers %}
-            <p>{{ dev.user.username }}</p>
+            <li><p>{{ dev.user.username }}</p></li>
         {% endfor %}
+    </ul>
     {% else %}
         <p>We hava no developers so far</p>
     {% endif %}

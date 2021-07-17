@@ -16,7 +16,18 @@ def index(request):
 
 @login_required(login_url='login')
 def startapper(request):
-    return render(request , 'users/startapper.html' , {})
+    try:
+        user = Startapper.objects.get(user = request.user)
+    except:
+        messages.warning(request , 'You are in practitioners page you are not developer')
+        return redirect('users:index')
+    ideas = IdeaStartapper.objects.all()
+    startappers = Startapper.objects.all()
+    context = {
+        'ideas':ideas,
+        'startappers':startappers
+    }
+    return render(request , 'users/startapper.html' , context)
 
 def ideastartapper(request):
     form = IdeaStartapperForm()
@@ -73,8 +84,40 @@ def developer(request):
 
 @login_required(login_url='login')
 def practitioner(request):
-    return render(request, 'users/practitioner.html', {})
-    
+    try:
+        user = Staff.objects.get(user = request.user)
+    except:
+        messages.warning(request , 'You are in practitioners page you are not developer')
+        return redirect('users:index')
+
+    practitioner = Staff.objects.filter(user__user_type = user.user.user_type)
+
+    if request.method == 'POST':
+        form = Applications(request.POST , request.FILES)
+        if form.is_valid():
+            data = ApplicationStaff()
+            data.title = form.cleaned_data['title']
+            data.description = form.cleaned_data['description']
+            try:
+                data.resume = request.FILES['resume']
+            except MultiValueDictKeyError:
+                data.resume = None
+            data.work_type = form.cleaned_data['work_type']
+            data.user = user
+            data.save()
+            messages.success(request, 'You application successfully send')
+            return redirect('users:profile')
+        else:
+            messages.warning(request, 'Application not send!')
+            return redirect('users:Practitioners')
+
+    applicationform = Applications() 
+
+    context = {
+        'practitioner':practitioner,
+        'applicationform':applicationform
+    }
+    return render(request, 'users/practitioner.html', context)    
 def profile_page(request):
     if request.user.user_type == "Startapper":
         user = Startapper.objects.get(user = request.user)

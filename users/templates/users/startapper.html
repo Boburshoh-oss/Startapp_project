@@ -6,9 +6,31 @@ Startapper
 
 {% block body %}
 
-<h1>{{request.user.username}}</h1>
 
+<h3>Here is Startappers' home . Here our startappers</h3>
+    {% if startappers %}
+    <ul>
+        {% for user in startappers %}
+            <li><p>{{ user.user.username }}</p></li>
+        {% endfor %}
+    </ul>
+    {% else %}
+        <h3>We have no Startappers so far</h3>
+    {% endif %}
 
+<br>
+{% if ideas %}
+<h4>Here our Startapp ideas</h4>
+<ul>
+    {% for idea in ideas %}
+        <li><p>{{ idea.title }} by {{ idea.user.user.username }}</p></li>
+    {% endfor %}
+</ul>
+{% else %}
+    <h3>We have no Startapps so far</h3>
+{% endif %}
+<br>
+<h4>You can also send your ideas here</h4>
 <button><a href="{% url 'users:ideastartapper' %}">create idea</a></button>
 
 {% endblock %}
