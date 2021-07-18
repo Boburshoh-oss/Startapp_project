@@ -38,7 +38,6 @@ INSTALLED_APPS = [
     'users.apps.UsersConfig',
     'register.apps.RegisterConfig',
     'parler',
-
 ]
 
 MIDDLEWARE = [
@@ -102,15 +101,25 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = "en"
+LANGUAGE_COOKIE_NAME = "lang"
+LANGUAGES = (
+    ('ru', "Ру"),
+    ('uz', "O'z"),
+    ('en', "En"),
+)
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Tashkent'
 
 USE_I18N = True
 
 USE_L10N = True
 
 USE_TZ = True
+
+LOCALE_PATHS = (
+    os.path.join(BASE_DIR, 'locale'),
+)
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
@@ -126,6 +135,24 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
+
+CORS_ORIGIN_ALLOW_ALL = True
+
+PARLER_DEFAULT_LANGUAGE_CODE = LANGUAGE_CODE
+
+PARLER_LANGUAGES = {
+    None: (
+        {'code': 'ru', },
+        {'code': 'uz', },
+        {'code': 'en', },
+    ),
+    'default': {
+        'fallbacks': [LANGUAGE_CODE],  #
+        # ts to PARLER_DEFAULT_LANGUAGE_CODE
+        'hide_untranslated': False,  # the default; let .active_translations() return fallbacks too.
+    }
+}
+
 
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
