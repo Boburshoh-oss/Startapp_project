@@ -1,14 +1,14 @@
 from django.contrib import messages
-from users.models import ApplicationStaff, Staff, Startapper , IdeaStartapper , AllUsersIdea 
+from users.models import ApplicationStaff, Staff, Startapper , IdeaStartapper , AllUsersIdea, SuccessProjects , CommentOfPost
 from django.shortcuts import redirect, render
 from django.contrib.auth.decorators import login_required
 from django.views.generic import UpdateView
-from .forms import AllIdeas , Applications
+from .forms import AllIdeas , Applications , IdeaStartapper , Comments , IdeaStartapperForm
 from django.utils.datastructures import MultiValueDictKeyError
+from django.http import HttpResponseRedirect
 # from .forms import Register
 # Create your views here.
-from users.forms import Registers , IdeaStartapperForm
-from users.models import Startapper , IdeaStartapper
+
 
 
 def index(request):
@@ -152,7 +152,31 @@ def profile_page(request):
         'ideaform': form
         }
     return render(request , 'users/profile.html' , context)
+
+def successProject(request):
+    project = SuccessProjects.objects.all()
+    return render(request, 'users/successProjects.html' , {'project':project})
     
+def projectDetatils(request , pk):
+    project = SuccessProjects.objects.get(pk=pk)
+    comment = CommentOfPost.objects.filter(post_id=pk)
+    return render(request, 'users/projectDetails.html', {'project': project, 'comment': comment})
+
+def comments(request, pk):
+    url = request.META.get('HTTP_REFERER')
+    if request.method == 'POST':
+        form = Comments(request.POST)
+        if form.is_valid():
+            data = CommentOfPost()
+            data.comment = form.cleaned_data['comment']
+            data.post_id = pk
+            current_user = request.user
+            data.owner_id = current_user.id
+            data.save()
+            messages.success(request, 'Your comment successfully send!')
+            return HttpResponseRedirect(url)
+    return HttpResponseRedirect(url)
+
 
 class StaffUpdateWiew(UpdateView):
     model = Staff

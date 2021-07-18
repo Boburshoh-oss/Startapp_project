@@ -1,0 +1,27 @@
+{% extends 'users/base.html' %}
+
+{% block title %}
+Success projects
+{% endblock %}
+
+{% block body %}
+
+    <div>
+        {% if project %}
+            {% for pr in project %}
+            <div style="display: inline-block; width: 250px; margin-left: 35px;">
+            <img  src="{{ pr.image.url }}" alt="Card image cap" style="width: 250px;">
+                <div>
+                    <h5 class="card-title"><a href="{% url 'users:project_detail' pr.pk %}">{{ pr.title }}</a></h5>
+                    <h6 class="card-title">{{ pr.url }}</h6>
+                    <p class="card-text">{{ pr.description }}</p>
+                    
+                </div>
+            </div>
+            {% endfor %}
+        {% else %}
+            <h3>We have no any success projects so far</h3>
+        {% endif %}
+    </div>
+
+{% endblock %}

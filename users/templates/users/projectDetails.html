@@ -1,0 +1,45 @@
+{% extends 'users/base.html' %}
+
+{% block title %}
+Success projects
+{% endblock %}
+
+{% block body %}
+
+<div style="width: 90vw; margin: o auto;">
+    <div style="width:800px; margin: 0 auto;">
+        <h3>Title {{ project.title }}</h3>
+        <a href="{{ project.image.url }}"><img src="{{ project.image.url }}" style="width: 600px; " alt="No photos"></a>
+        <p>project.description</p>
+        <p><a href="{{ project.url }}">{{ project.url }}</a></p>
+    </div>
+
+<br>
+    <div style="width:80%; margin: 0 auto;">
+        <form action="{% url 'users:comment' project.pk %}" method="post" style="margin-left: 15%;"> 
+            {% csrf_token %}
+            <div class="form-group">
+                <input name="comment"  type="text" placeholder="Comment"/>
+            </div>
+
+            {% if user.is_authenticated %}
+                <button type="submit">Send</button>
+            {% else %}
+                <h3>You need register or login</h3>
+            {% endif %}
+        </form>
+        <br>
+
+        <div style="border: 1px solid black; border-radius: 10px; padding: 10px; box-sizing: border-box;">
+            {% for c in comment %}
+                <div>
+                    <strong>{{ c.owner.username }}</strong>
+                    <p>{{ c.comment }}</p>
+                    <p>{{ c.created_at }}</p>
+                </div>
+                <hr>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

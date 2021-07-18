@@ -1,6 +1,7 @@
+from django.db.models import fields
 from django.forms import ModelForm
 from django import forms
-from .models import AllUsersIdea , ApplicationStaff
+from .models import AllUsersIdea , ApplicationStaff, CommentOfPost
 
 from .models import CustomUser, Startapper, IdeaStartapper
 
@@ -26,3 +27,7 @@ class Applications(forms.ModelForm):
     class Meta:
         model = ApplicationStaff
         fields = ['title' , 'description' , 'resume' , 'work_type']
+class Comments(forms.ModelForm):
+    class Meta:
+        model = CommentOfPost
+        fields = ['comment']

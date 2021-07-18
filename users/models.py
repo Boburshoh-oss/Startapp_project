@@ -141,7 +141,7 @@ class ContacktsProwork(models.Model):
     phone_number2 = models.CharField(max_length=255)
 
     def __str__(self):
-        return
+        return self.adress
 
 class ProworkAdress(TranslatableModel):
     owner = models.ForeignKey(ContacktsProwork, on_delete=models.CASCADE)
